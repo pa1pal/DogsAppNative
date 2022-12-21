@@ -1,5 +1,6 @@
 package `in`.pawan.dogsapp.ui.main
 
+import `in`.pawan.dogsapp.R
 import `in`.pawan.dogsapp.data.ApiResponse
 import `in`.pawan.dogsapp.databinding.FragmentMainBinding
 import `in`.pawan.dogsapp.ui.main.list.BreedAdapter
@@ -12,26 +13,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    private val breedsAdapter: BreedAdapter = BreedAdapter()
+    private val breedsAdapter: BreedAdapter = BreedAdapter() { breed ->
+        navigateToBreedDetailsPage(breed)
+    }
+
+//    private val navHostFragment =
+//        activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+//    val navController = navHostFragment.navController
 
     private val viewModel: MainViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +53,13 @@ class MainFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.breedsRv.layoutManager = mLayoutManager
         binding.breedsRv.adapter = breedsAdapter
+    }
+
+    private fun navigateToBreedDetailsPage(breed: String) {
+        val action = MainFragmentDirections.actionMainFragmentToDogsDetailsFragment(
+            breed = breed
+        )
+        binding.root.findNavController().navigate(action)
     }
 
     private fun setObservers() {

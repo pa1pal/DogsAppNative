@@ -9,7 +9,7 @@ import androidx.annotation.Keep
 @Parcelize
 data class BreedImages(
     @SerializedName("message")
-    val message: List<String?>,
+    val imageUrl: String,
     @SerializedName("status")
     val status: String?
 ) : Parcelable
