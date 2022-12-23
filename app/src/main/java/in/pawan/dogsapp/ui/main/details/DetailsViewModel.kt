@@ -1,9 +1,9 @@
 package `in`.pawan.dogsapp.ui.main.details
 
+import `in`.pawan.dogsapp.BuildConfig
 import `in`.pawan.dogsapp.data.ApiResponse
 import `in`.pawan.dogsapp.data.MainRepository
-import `in`.pawan.dogsapp.data.dto.Breed
-import `in`.pawan.dogsapp.data.dto.BreedImages
+import `in`.pawan.dogsapp.data.dto.*
 import `in`.pawan.dogsapp.utils.NetworkHelper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,11 +26,38 @@ class DetailsViewModel @Inject constructor(
     private var mutableBreedDetailsLiveData: MutableLiveData<ApiResponse<BreedImages>> =
         MutableLiveData()
 
+    val trackEventLiveData: LiveData<ApiResponse<EventResponse>>
+        get() = mutableTrackEventLiveData
+    private var mutableTrackEventLiveData: MutableLiveData<ApiResponse<EventResponse>> =
+        MutableLiveData()
+
+
     fun fetchBreedDetails(breedName: String) {
         if (networkHelper.isConnected()) {
             viewModelScope.launch {
                 mainRepository.getBreedImages(breedName).collect {
                     mutableBreedDetailsLiveData.value = it
+                }
+            }
+        } else {
+            networkStatusMutableLiveData.value = false
+        }
+    }
+
+    fun trackEventFromApi(breedName: String?) {
+        val userData = UserData(androidId = "a123", ip = "168.1.1.1", os = "Android")
+        val customData = CustomData(breed = breedName)
+
+        val event = Event(
+            name = "view dog",
+            branchKey = BuildConfig.BranchKey,
+            userData = userData,
+            customData = customData
+        )
+        if (networkHelper.isConnected()) {
+            viewModelScope.launch {
+                mainRepository.trackEvent(event).collect {
+                    mutableTrackEventLiveData.value = it
                 }
             }
         } else {

@@ -37,11 +37,32 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="pawanpal.test-app.link" />
+                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
+            </intent-filter>
+
+<!--             Branch App Links - Live App -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="pawanpal.app.link" />
+                <data android:scheme="https" android:host="pawanpal.test-app.link" />
+                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
+                <data android:scheme="https" android:host="pawanpal-alternate.app.link" />
+            </intent-filter>
+            <!-- Branch App Links - Test App -->
         </activity>
 
         <!-- Branch init -->
         <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_obZ8HYNNZgHB6qw5a66zVmdbssjl7wc4" />
         <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
+        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_pnW9O9JM8eRsWEs4g0ZCTnlkqxhhYwCa" />
         <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
         <meta-data
             android:name="preloaded_fonts"

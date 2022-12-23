@@ -2,8 +2,13 @@ package `in`.pawan.dogsapp.data.network
 
 import `in`.pawan.dogsapp.data.dto.Breed
 import `in`.pawan.dogsapp.data.dto.BreedImages
+import `in`.pawan.dogsapp.data.dto.Event
+import `in`.pawan.dogsapp.data.dto.EventResponse
+import `in`.pawan.dogsapp.utils.Constants
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
@@ -12,4 +17,7 @@ interface ApiService {
 
     @GET("breed/{breed}/images/random")
     suspend fun breedImages(@Path("breed") breed: String): Response<BreedImages>
+
+    @POST(Constants.CUSTOM_EVENT)
+    suspend fun trackEvent(@Body event: Event): Response<EventResponse>
 }

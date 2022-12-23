@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "in.pawan.dogsapp"
-        minSdk 23
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -23,8 +23,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField 'String', "BranchKey", Branch_key
+        }
         release {
             minifyEnabled false
+            buildConfigField 'String', "BranchKey", Branch_key
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -53,7 +57,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-    implementation 'io.branch.sdk.android:library:4.+'
+    implementation 'io.branch.sdk.android:library:5.2.7'
     implementation 'com.google.dagger:hilt-android:2.44'
     implementation 'androidx.databinding:viewbinding:7.1.2'
     api "androidx.navigation:navigation-fragment-ktx:2.5.3"

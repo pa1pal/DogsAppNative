@@ -2,14 +2,14 @@ package `in`.pawan.dogsapp.di
 
 import `in`.pawan.dogsapp.data.network.ApiService
 import android.content.Context
-import com.android.installreferrer.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.branch.indexing.BranchUniversalObject
+import io.branch.referral.util.ContentMetadata
 import kotlinx.coroutines.Dispatchers
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,10 +26,7 @@ class NetworkModule {
     @Provides
     fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
         .apply {
-            level = if (BuildConfig.DEBUG)
-                HttpLoggingInterceptor.Level.BODY
-            else
-                HttpLoggingInterceptor.Level.BODY
+            level = HttpLoggingInterceptor.Level.BODY
         }
 
     @Provides
@@ -66,5 +63,17 @@ class NetworkModule {
     @Singleton
     fun provideCoroutineContext(): CoroutineContext {
         return Dispatchers.IO
+    }
+
+    @Provides
+    @Singleton
+    fun provideBranchUniversalObject(): BranchUniversalObject {
+        return  BranchUniversalObject()
+            .setCanonicalIdentifier("content/12345")
+            .setTitle("My Dogs app")
+            .setContentDescription("My Content Description")
+            .setContentImageUrl("https://lorempixel.com/400/400")
+            .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+            .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
     }
 }

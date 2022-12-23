@@ -1,9 +1,9 @@
 package `in`.pawan.dogsapp.ui.main
 
-import `in`.pawan.dogsapp.R
 import `in`.pawan.dogsapp.data.ApiResponse
 import `in`.pawan.dogsapp.databinding.FragmentMainBinding
 import `in`.pawan.dogsapp.ui.main.list.BreedAdapter
+import `in`.pawan.dogsapp.utils.Constants
 import `in`.pawan.dogsapp.utils.hide
 import `in`.pawan.dogsapp.utils.show
 import android.os.Bundle
@@ -14,9 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import io.branch.referral.util.BranchEvent
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -24,6 +24,7 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val breedsAdapter: BreedAdapter = BreedAdapter() { breed ->
+        trackClickEvent(breed)
         navigateToBreedDetailsPage(breed)
     }
 
@@ -60,6 +61,12 @@ class MainFragment : Fragment() {
             breed = breed
         )
         binding.root.findNavController().navigate(action)
+    }
+
+    private fun trackClickEvent(breed: String) {
+        BranchEvent("Dog click")
+            .addCustomDataProperty(Constants.CLICKED_BREED, breed)
+            .logEvent(requireContext())
     }
 
     private fun setObservers() {

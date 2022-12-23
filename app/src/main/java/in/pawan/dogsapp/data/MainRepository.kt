@@ -2,6 +2,8 @@ package `in`.pawan.dogsapp.data
 
 import `in`.pawan.dogsapp.data.dto.Breed
 import `in`.pawan.dogsapp.data.dto.BreedImages
+import `in`.pawan.dogsapp.data.dto.Event
+import `in`.pawan.dogsapp.data.dto.EventResponse
 import `in`.pawan.dogsapp.data.network.DogsRemoteData
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
@@ -54,6 +56,37 @@ class MainRepository @Inject constructor(
                 val response = remoteData.getDogBreedImages(breed)
                 if (response.isSuccessful) {
                     emit(ApiResponse.Success(response.body() as BreedImages))
+                } else {
+                    emit(
+                        ApiResponse.Error(
+                            "Couldn't reach server. Check your internet connection. 1"
+                        )
+                    )
+                }
+            } catch (e: HttpException) {
+                emit(
+                    ApiResponse.Error(
+                        e.localizedMessage ?: "An unexpected error occured"
+                    )
+                )
+            } catch (e: IOException) {
+                Log.e("TAG", "apiCallGetProviderLandingDetails: ${e.message}")
+                emit(ApiResponse.Error("Couldn't reach server. Check your internet connection."))
+            } catch (e: Exception) {
+                Log.e("TAG", "apiCallGetProviderLandingDetails: ${e.message}")
+                emit(ApiResponse.Error("Couldn't reach server. Check your internet connection."))
+            }
+
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun trackEvent(event: Event): Flow<ApiResponse<EventResponse>> {
+        return flow {
+            try {
+                emit(ApiResponse.Loading())
+                val response = remoteData.trackEvent(event)
+                if (response.isSuccessful) {
+                    emit(ApiResponse.Success(response.body() as EventResponse))
                 } else {
                     emit(
                         ApiResponse.Error(
