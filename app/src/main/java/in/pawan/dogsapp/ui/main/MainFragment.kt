@@ -28,10 +28,6 @@ class MainFragment : Fragment() {
         navigateToBreedDetailsPage(breed)
     }
 
-//    private val navHostFragment =
-//        activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//    val navController = navHostFragment.navController
-
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(

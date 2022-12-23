@@ -35,14 +35,10 @@ class MainActivity : AppCompatActivity() {
                 Log.e("BRANCH SDK", error.message)
             }
         }.withData(this.intent.data).init()
-
-        // first
-        val installParams = Branch.getInstance().firstReferringParams
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-//        Branch.sessionBuilder(this).withCallback(branchListener).reInit()
         intent?.putExtra("branch_force_new_session", true)
         Branch.sessionBuilder(this).withCallback { referringParams, error ->
             if (error != null) {
@@ -52,6 +48,4 @@ class MainActivity : AppCompatActivity() {
             }
         }.reInit()
     }
-
-
 }

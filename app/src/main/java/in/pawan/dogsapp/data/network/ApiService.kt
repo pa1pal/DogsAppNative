@@ -18,6 +18,9 @@ interface ApiService {
     @GET("breed/{breed}/images/random")
     suspend fun breedImages(@Path("breed") breed: String): Response<BreedImages>
 
+    /**
+     * Directly added url because Retrofit base url is different
+     */
     @POST(Constants.CUSTOM_EVENT)
     suspend fun trackEvent(@Body event: Event): Response<EventResponse>
 }

@@ -9,9 +9,6 @@ class DogApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Branch logging for debugging
-//        Branch.enableTestMode()
-
         Branch.enableLogging()
         // Branch object initialization
         Branch.getAutoInstance(this)

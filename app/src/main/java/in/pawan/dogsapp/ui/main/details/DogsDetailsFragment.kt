@@ -5,6 +5,7 @@ import `in`.pawan.dogsapp.databinding.FragmentDetailsBinding
 import `in`.pawan.dogsapp.utils.Constants
 import `in`.pawan.dogsapp.utils.hide
 import `in`.pawan.dogsapp.utils.show
+import android.content.res.Resources.Theme
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -74,6 +75,9 @@ class DogsDetailsFragment : Fragment() {
             detailsViewModel.trackEventFromApi(breedName, Constants.CUSTOM_TRACK_SHARE_EVENT)
 
             val lp = LinkProperties()
+                .setChannel("facebook")
+                .setCampaign("content 123 launch")
+                .setStage("new user")
                 .setFeature("sharing")
                 .setCampaign("$breedName")
                 .addControlParameter("\$desktop_url", "$imageUrl")
@@ -92,7 +96,7 @@ class DogsDetailsFragment : Fragment() {
                         ResourcesCompat.getDrawable(
                             resources,
                             android.R.drawable.ic_menu_search,
-                            null
+                            requireContext().theme
                         ), "Show more"
                     )
                     .addPreferredSharingOption(SharingHelper.SHARE_WITH.FACEBOOK)
