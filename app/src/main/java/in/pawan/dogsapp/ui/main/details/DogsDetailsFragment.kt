@@ -57,7 +57,7 @@ class DogsDetailsFragment : Fragment() {
         setObservers()
         setListeners()
         trackViewEvent(breedName)
-        trackEventFromAPI(breedName)
+        detailsViewModel.trackEventFromApi(breedName, Constants.CUSTOM_TRACK_VIEW_EVENT)
     }
 
     private fun viewInitialization() {
@@ -69,12 +69,10 @@ class DogsDetailsFragment : Fragment() {
             .logEvent(requireContext())
     }
 
-    private fun trackEventFromAPI(breedName: String?) {
-        detailsViewModel.trackEventFromApi(breedName)
-    }
-
     private fun setListeners() {
         binding.shareDeeplink.setOnClickListener {
+            detailsViewModel.trackEventFromApi(breedName, Constants.CUSTOM_TRACK_SHARE_EVENT)
+
             val lp = LinkProperties()
                 .setFeature("sharing")
                 .setCampaign("$breedName")

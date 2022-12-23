@@ -44,12 +44,12 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    fun trackEventFromApi(breedName: String?) {
+    fun trackEventFromApi(breedName: String?, eventName: String) {
         val userData = UserData(androidId = "a123", ip = "168.1.1.1", os = "Android")
         val customData = CustomData(breed = breedName)
 
         val event = Event(
-            name = "view dog",
+            name = eventName,
             branchKey = BuildConfig.BranchKey,
             userData = userData,
             customData = customData

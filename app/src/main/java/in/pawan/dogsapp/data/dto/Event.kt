@@ -26,7 +26,7 @@ data class Event(
 @Parcelize
 data class CustomData(
     @SerializedName("breed")
-    val breed: String?
+    val breed: String? = null
 ) : Parcelable
 
 @Keep
