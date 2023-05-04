@@ -1,12 +1,13 @@
 package `in`.pawan.dogsapp
 
-import `in`.pawan.dogsapp.ui.main.MainFragmentDirections
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.adobe.marketing.mobile.MobileCore
 import dagger.hilt.android.AndroidEntryPoint
+import `in`.pawan.dogsapp.ui.main.MainFragmentDirections
 import io.branch.referral.Branch
 
 
@@ -21,10 +22,10 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         // listener (within Main Activity's onStart)
+
         Branch.sessionBuilder(this).withCallback { referringParams, error ->
             if (error == null) {
-                Log.i("BRANCH SDK", referringParams.toString())
-
+                Log.i("BRANCH SDK logs", referringParams.toString())
                 val action = MainFragmentDirections.actionMainFragmentToDogsDetailsFragment(
                     breed = referringParams?.getString("breed")
                 )

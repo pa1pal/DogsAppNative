@@ -10,7 +10,10 @@ class DogApplication: Application() {
         super.onCreate()
 
         Branch.enableLogging()
+
+
         // Branch object initialization
         Branch.getAutoInstance(this)
+        Branch.getInstance().disableTracking(true)
     }
 }
