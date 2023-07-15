@@ -1,12 +1,7 @@
 package `in`.pawan.dogsapp.ui.main.details
 
-import `in`.pawan.dogsapp.data.ApiResponse
-import `in`.pawan.dogsapp.databinding.FragmentDetailsBinding
-import `in`.pawan.dogsapp.utils.Constants
-import `in`.pawan.dogsapp.utils.hide
-import `in`.pawan.dogsapp.utils.show
-import android.content.res.Resources.Theme
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,14 +12,21 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import `in`.pawan.dogsapp.data.ApiResponse
+import `in`.pawan.dogsapp.databinding.FragmentDetailsBinding
+import `in`.pawan.dogsapp.utils.Constants
+import `in`.pawan.dogsapp.utils.hide
+import `in`.pawan.dogsapp.utils.show
 import io.branch.indexing.BranchUniversalObject
 import io.branch.referral.Branch
+import io.branch.referral.Branch.BranchLinkCreateListener
 import io.branch.referral.BranchError
 import io.branch.referral.SharingHelper
 import io.branch.referral.util.BRANCH_STANDARD_EVENT
 import io.branch.referral.util.BranchEvent
 import io.branch.referral.util.LinkProperties
 import io.branch.referral.util.ShareSheetStyle
+import java.util.Arrays
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -70,6 +72,7 @@ class DogsDetailsFragment : Fragment() {
             .logEvent(requireContext())
     }
 
+
     private fun setListeners() {
         binding.shareDeeplink.setOnClickListener {
             detailsViewModel.trackEventFromApi(breedName, Constants.CUSTOM_TRACK_SHARE_EVENT)
@@ -80,8 +83,17 @@ class DogsDetailsFragment : Fragment() {
                 .setStage("new user")
                 .setFeature("sharing")
                 .setCampaign("$breedName")
-                .addControlParameter("\$desktop_url", "$imageUrl")
+                //.addControlParameter("\$desktop_url", "$imageUrl")
                 .addControlParameter("breed", args.breed)
+            Log.d("Dogs details", "Image URL: $imageUrl")
+            // lp.alias = "$breedName"
+
+//            branchUniversalObject.generateShortUrl(requireContext(), lp, object : BranchLinkCreateListener{
+//                override fun onLinkCreate(url: String?, error: BranchError?) {
+//                    Log.d("Dogs details", "onLinkCreate: $url")
+//                    Log.d("Dogs details", "onLinkCreate: $error")
+//                }
+//            })
 
             val shareStyle =
                 ShareSheetStyle(requireActivity(), "Check this out!", "This Dog is cute: ")
@@ -117,6 +129,7 @@ class DogsDetailsFragment : Fragment() {
                         sharedChannel: String?,
                         error: BranchError?
                     ) {
+                        Log.d("Dogs details", "onLinkCreate form share sheet: $sharedLink")
                     }
 
                     override fun onChannelSelected(channelName: String) {}

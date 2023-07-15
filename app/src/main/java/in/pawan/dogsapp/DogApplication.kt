@@ -14,6 +14,6 @@ class DogApplication: Application() {
 
         // Branch object initialization
         Branch.getAutoInstance(this)
-        Branch.getInstance().disableTracking(true)
+//        Branch.getInstance().disableTracking(false)
     }
 }

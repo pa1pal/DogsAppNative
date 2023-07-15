@@ -54,6 +54,8 @@ class DetailsViewModel @Inject constructor(
             userData = userData,
             customData = customData
         )
+        var s: String = "sdadsf"
+        s.length 
         if (networkHelper.isConnected()) {
             viewModelScope.launch {
                 mainRepository.trackEvent(event).collect {

@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         // listener (within Main Activity's onStart)
-
         Branch.sessionBuilder(this).withCallback { referringParams, error ->
             if (error == null) {
                 Log.i("BRANCH SDK logs", referringParams.toString())

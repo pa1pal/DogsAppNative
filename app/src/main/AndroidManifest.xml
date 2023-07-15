@@ -30,7 +30,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
 
-            <!-- Branch URI scheme -->
+<!--             Branch URI scheme -->
             <intent-filter>
                 <data android:scheme="dogsapp" android:host="open" />
                 <action android:name="android.intent.action.VIEW" />
@@ -51,11 +51,10 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+<!--                <data android:scheme="https" android:host="trk.branchster.in" />-->
+<!--                <data android:scheme="http" android:host="trk.branchster.in" />-->
                 <data android:scheme="https" android:host="pawanpal1.app.link" />
-                <data android:scheme="https" android:host="trk.branchster.in" />
-                <data android:scheme="http" android:host="trk.branchster.in" />
                 <data android:scheme="https" android:host="pawanpal1.test-app.link" />
-                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
                 <data android:scheme="https" android:host="pawanpal-alternate.app.link" />
             </intent-filter>
             <!-- Branch App Links - Test App -->
@@ -67,6 +66,7 @@
 
         <!-- Branch init -->
         <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_obZ8HYNNZgHB6qw5a66zVmdbssjl7wc4" />
+<!--        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_ll8htuvVfDv3ZbWy4mmAjeckDAcBgz08" />-->
         <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
         <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_pnW9O9JM8eRsWEs4g0ZCTnlkqxhhYwCa" />
         <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
