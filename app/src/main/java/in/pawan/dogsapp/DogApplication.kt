@@ -10,10 +10,11 @@ class DogApplication: Application() {
         super.onCreate()
 
         Branch.enableLogging()
+//        Branch.enableTestMode()
 
 
         // Branch object initialization
-        Branch.getAutoInstance(this).disableTracking(true)
+        Branch.getAutoInstance(this)
 //        Branch.getAutoInstance(this).enableFacebookAppLinkCheck();
 
 //        Branch.getInstance().disableTracking(false)
