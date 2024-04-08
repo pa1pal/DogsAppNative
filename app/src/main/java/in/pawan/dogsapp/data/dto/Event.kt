@@ -19,7 +19,16 @@ data class Event(
     @SerializedName("name")
     val name: String? = null,
     @SerializedName("user_data")
-    val userData: UserData?
+    val userData: UserData?,
+    @SerializedName("event_data")
+    val eventData: EventData
+) : Parcelable
+
+@Keep
+@Parcelize
+data class EventData(
+    @SerializedName("custom_param_1")
+    val customParam1: String? = null
 ) : Parcelable
 
 @Keep

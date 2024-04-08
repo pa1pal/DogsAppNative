@@ -47,15 +47,16 @@ class DetailsViewModel @Inject constructor(
     fun trackEventFromApi(breedName: String?, eventName: String) {
         val userData = UserData(androidId = "a123", ip = "168.1.1.1", os = "Android")
         val customData = CustomData(breed = breedName)
+        val eventData = EventData("pawan_custom_param1")
 
         val event = Event(
             name = eventName,
             branchKey = BuildConfig.BranchKey,
             userData = userData,
-            customData = customData
+            customData = customData,
+            eventData = eventData
         )
-        var s: String = "sdadsf"
-        s.length 
+
         if (networkHelper.isConnected()) {
             viewModelScope.launch {
                 mainRepository.trackEvent(event).collect {

@@ -67,6 +67,7 @@ class DogsDetailsFragment : Fragment() {
         setListeners()
         trackViewEvent(breedName)
         detailsViewModel.trackEventFromApi(breedName, Constants.CUSTOM_TRACK_VIEW_EVENT)
+
     }
 
     private fun viewInitialization() {
@@ -104,6 +105,35 @@ class DogsDetailsFragment : Fragment() {
                         .setSku("test_sku")
                         .setContentSchema(BranchContentSchema.COMMERCE_PRODUCT)
                 )
+
+                .addKeyWord("keyword1")
+                .addKeyWord("keyword2")
+
+            val buo2 = BranchUniversalObject()
+                .setCanonicalIdentifier("myprod/1234")
+                .setCanonicalUrl("https://test_canonical_url")
+                .setTitle("test_title")
+                .setContentMetadata(
+                    ContentMetadata()
+                        .addCustomMetadata("custom_metadata_key1", "custom_metadata_val1")
+                        .addCustomMetadata("custom_metadata_key2", "custom_metadata_val2")
+                        .addCustomMetadata("custom_metadata_key3", "custom_metadata_val3")
+                        .addImageCaptions("image_caption_1", "image_caption2", "image_caption3")
+                        .setAddress("Street_Name", "test city", "test_state", "test_country", "test_postal_code")
+                        .setRating(5.2, 6.0, 5)
+                        .setLocation(-151.67, -124.0)
+                        .setPrice(100.0, CurrencyType.INR)
+                        .setProductBrand("test_prod_brand2")
+                        .setProductCategory(ProductCategory.BABY_AND_TODDLER)
+                        .setProductName("test_prod_name2")
+                        .setProductCondition(ContentMetadata.CONDITION.EXCELLENT)
+                        .setProductVariant("test_prod_variant2")
+                        .setQuantity(1.5)
+                        .setSku("test_sku2")
+                        .setContentSchema(BranchContentSchema.COMMERCE_PRODUCT)
+                )
+
+
                 .addKeyWord("keyword1")
                 .addKeyWord("keyword2")
 
@@ -122,7 +152,7 @@ class DogsDetailsFragment : Fragment() {
                 .addCustomDataProperty("custom_param_1", "Custom_Event_Property_val1")
                 .addCustomDataProperty("custom_param_2", "Custom_Event_Property_val2")
                 .addCustomDataProperty("custom_param_3", "Custom_Event_Property_val3")
-                .addContentItems(buo)
+                .addContentItems(buo, buo2)
                 .logEvent(requireContext(),  object : BranchLogEventCallback {
                     override fun onSuccess(responseCode: Int) {
 

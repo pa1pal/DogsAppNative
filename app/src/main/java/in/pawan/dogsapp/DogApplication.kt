@@ -15,6 +15,8 @@ class DogApplication: Application() {
 
         // Branch object initialization
         Branch.getAutoInstance(this)
+
+
 //        Branch.getAutoInstance(this).enableFacebookAppLinkCheck();
 
 //        Branch.getInstance().disableTracking(false)
