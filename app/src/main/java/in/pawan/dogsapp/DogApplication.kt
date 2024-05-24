@@ -1,6 +1,7 @@
 package `in`.pawan.dogsapp
 
 import android.app.Application
+import android.util.Log
 import dagger.hilt.android.HiltAndroidApp
 import io.branch.referral.Branch
 
@@ -14,9 +15,7 @@ class DogApplication: Application() {
 
 
         // Branch object initialization
-        Branch.getAutoInstance(this)
-
-
+        Branch.getAutoInstance(this).setIdentity("1234")
 //        Branch.getAutoInstance(this).enableFacebookAppLinkCheck();
 
 //        Branch.getInstance().disableTracking(false)

@@ -90,6 +90,8 @@ class MainActivity : AppCompatActivity() {
         ) {
             Log.i("onNewIntent", "Branch SDK reinitialized");
             Branch.sessionBuilder(this).withCallback(branchReferralInitListener).reInit();
+        } else {
+            Log.i("onNewIntent", "Intent is null");
         }
 
 //        this.intent?.putExtra("branch_force_new_session", true)
