@@ -186,48 +186,60 @@ class DogsDetailsFragment : Fragment() {
                 }
             })
 
-            val shareStyle =
-                ShareSheetStyle(requireActivity(), "Check this out!", "This Dog is cute: ")
-                    .setCopyUrlStyle(
-                        ResourcesCompat.getDrawable(
-                            resources,
-                            android.R.drawable.ic_menu_send,
-                            null
-                        ), "Copy", "Added to clipboard"
-                    )
-                    .setMoreOptionStyle(
-                        ResourcesCompat.getDrawable(
-                            resources,
-                            android.R.drawable.ic_menu_search,
-                            requireContext().theme
-                        ), "Show more"
-                    )
-                    .addPreferredSharingOption(SharingHelper.SHARE_WITH.FACEBOOK)
-                    .addPreferredSharingOption(SharingHelper.SHARE_WITH.EMAIL)
-                    .addPreferredSharingOption(SharingHelper.SHARE_WITH.MESSAGE)
-                    .setAsFullWidthStyle(true)
-                    .setSharingTitle("Share With")
-
-            branchUniversalObject.showShareSheet(
+            Branch.getInstance().share(
                 requireActivity(),
+                branchUniversalObject,
                 lp,
-                shareStyle,
-                object : Branch.BranchLinkShareListener {
-                    override fun onShareLinkDialogLaunched() {}
-                    override fun onShareLinkDialogDismissed() {}
-                    override fun onLinkShareResponse(
-                        sharedLink: String?,
-                        sharedChannel: String?,
-                        error: BranchError?
-                    ) {
-                        Log.d("Dogs details", "onLinkCreate form share sheet: $sharedLink")
-                        if (error != null) {
-                            Log.d("Share dog error", "error: $error")
-                        }
-                    }
+                object : Branch.BranchNativeLinkShareListener {
+                    override fun onLinkShareResponse(sharedLink: String, error: BranchError) {}
+                    override fun onChannelSelected(channelName: String) { }
+                },
+                "Sharing Branch Short URL",
+                "Using Native Chooser Dialog"
+            )
 
-                    override fun onChannelSelected(channelName: String) {}
-                })
+//            val shareStyle =
+//                ShareSheetStyle(requireActivity(), "Check this out!", "This Dog is cute: ")
+//                    .setCopyUrlStyle(
+//                        ResourcesCompat.getDrawable(
+//                            resources,
+//                            android.R.drawable.ic_menu_send,
+//                            null
+//                        ), "Copy", "Added to clipboard"
+//                    )
+//                    .setMoreOptionStyle(
+//                        ResourcesCompat.getDrawable(
+//                            resources,
+//                            android.R.drawable.ic_menu_search,
+//                            requireContext().theme
+//                        ), "Show more"
+//                    )
+//                    .addPreferredSharingOption(SharingHelper.SHARE_WITH.FACEBOOK)
+//                    .addPreferredSharingOption(SharingHelper.SHARE_WITH.EMAIL)
+//                    .addPreferredSharingOption(SharingHelper.SHARE_WITH.MESSAGE)
+//                    .setAsFullWidthStyle(true)
+//                    .setSharingTitle("Share With")
+
+//            branchUniversalObject.showShareSheet(
+//                requireActivity(),
+//                lp,
+//                shareStyle,
+//                object : Branch.BranchLinkShareListener {
+//                    override fun onShareLinkDialogLaunched() {}
+//                    override fun onShareLinkDialogDismissed() {}
+//                    override fun onLinkShareResponse(
+//                        sharedLink: String?,
+//                        sharedChannel: String?,
+//                        error: BranchError?
+//                    ) {
+//                        Log.d("Dogs details", "onLinkCreate form share sheet: $sharedLink")
+//                        if (error != null) {
+//                            Log.d("Share dog error", "error: $error")
+//                        }
+//                    }
+//
+//                    override fun onChannelSelected(channelName: String) {}
+//                })
 
         }
     }
