@@ -54,6 +54,7 @@ class DogsDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        Branch.getInstance().setIdentity("1234")
         return binding.root
     }
 

@@ -1,32 +1,73 @@
 package `in`.pawan.dogsapp
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import com.google.android.gms.ads.identifier.AdvertisingIdClient
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.analytics
 import dagger.hilt.android.AndroidEntryPoint
 import `in`.pawan.dogsapp.ui.main.MainFragmentDirections
 import io.branch.referral.Branch
 import io.branch.referral.Branch.BranchReferralInitListener
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import io.branch.referral.validators.DeepLinkRoutingValidator
+import java.lang.ref.WeakReference
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    //    private lateinit var intent: Intent
+    private lateinit var analytics: FirebaseAnalytics
+    private var activityRef: WeakReference<Activity>? = null
+
+    companion object {
+        const val TAG = "MainActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activityRef = WeakReference<Activity>(this)
 
         setContentView(R.layout.activity_main)
+
     }
 
     override fun onStart() {
         super.onStart()
         // listener (within Main Activity's onStart)
+        analytics = Firebase.analytics
+
+//        analytics.appInstanceId.addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                // Get the Firebase App Instance ID
+//                val appInstanceId = task.result
+//                // Set the Firebase App Instance ID as a request metadata in Branch SDK
+//                if (appInstanceId != null) {
+//                    Branch.getInstance().setRequestMetadata("\$firebase_app_instance_id", appInstanceId)
+//                }
+//                Log.d(TAG, "Firebase App Instance ID: $appInstanceId")
+//            } else {
+//                val exception = task.exception
+//                Log.e(TAG, "Error getting Firebase App Instance ID", exception)
+//            }
+//        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Navigate to Details?")
+            .setMessage("Accept cookies")
+            .setPositiveButton("Yes") { dialog, _ ->
+               Branch.getInstance().disableTracking(false)
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                Branch.getInstance().disableTracking(true)
+                dialog.dismiss()
+            }
+            .show()
+
 
         Branch.sessionBuilder(this).withCallback { referringParams, error ->
             if (error == null) {
@@ -38,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                         } else ""
                     )
 
+                    DeepLinkRoutingValidator.validate(activityRef)
                     this.findNavController(R.id.nav_host_fragment).navigate(action)
                 }
             } else {
@@ -45,10 +87,10 @@ class MainActivity : AppCompatActivity() {
             }
         }.withData(this.intent.data).init()
 
-        GlobalScope.launch {
-            val adInfo = AdvertisingIdClient.getAdvertisingIdInfo(this@MainActivity)
-            Log.d("aaid", adInfo.id ?: "not capturing")
-        }
+//        GlobalScope.launch {
+//            val adInfo = AdvertisingIdClient.getAdvertisingIdInfo(this@MainActivity)
+//            Log.d("aaid", adInfo.id ?: "not capturing")
+//        }
     }
 
 //    override fun onResume() {
