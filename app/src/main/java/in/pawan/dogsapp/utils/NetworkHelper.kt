@@ -7,7 +7,6 @@ import android.net.NetworkInfo
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-
 class NetworkHelper @Inject constructor(@ApplicationContext val context: Context) : NetworkConnectivity {
     @SuppressLint("MissingPermission")
     override fun getNetworkInfo(): NetworkInfo? {

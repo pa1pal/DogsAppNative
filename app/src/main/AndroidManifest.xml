@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
         android:name=".DogApplication"
+        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -16,10 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DogsApp"
         tools:targetApi="33">
+        <profileable
+            android:shell="true"
+            tools:targetApi="29" />
+
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTask"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,53 +34,82 @@
                 android:name="android.app.lib_name"
                 android:value="" />
 
-<!--             Branch URI scheme -->
-            <intent-filter>
-                <data android:scheme="dogsapp" android:host="open" />
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
+            <!-- Branch URI scheme -->
+             <intent-filter>
+             <data android:scheme="dogsapp" android:host="open" />
+             <action android:name="android.intent.action.VIEW" />
+             <category android:name="android.intent.category.DEFAULT" />
+             <category android:name="android.intent.category.BROWSABLE" />
+             </intent-filter>
 
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="pawanpal1.test-app.link" />
-                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
+
+                <data
+                    android:host="pawanpal1.test-app.link"
+                    android:scheme="https" />
+                <data android:scheme="https" />
+                <data android:host="pawanpal1.app.link" />
+                <data
+                    android:host="pawan.devishetty.in"
+                    android:scheme="https" />
+
+                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website. -->
             </intent-filter>
 
-<!--             Branch App Links - Live App -->
-            <intent-filter android:autoVerify="false">
+            <!-- Branch App Links - Live App -->
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http"/>
-                <data android:scheme="https"/>
-                <data android:host="trk.branchster.in"/>
-                <data android:host="pawan.branchster.in"/>
-                <data android:host="open" />
-                <data android:scheme="https" android:host="pawanpal1.app.link" />
-                <data android:scheme="https" android:host="pawanpal2.app.link" />
-                <data android:scheme="https" android:host="pawanpal1.test-app.link" />
-                <data android:scheme="https" android:host="pawanpal-alternate.app.link" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="trk.branchster.in" />
+                <data android:host="pawan.branchster.in" />
+                <data
+                    android:host="pawanpal1.app.link"
+                    android:scheme="https" />
+                <data
+                    android:host="www.pawan.devishetty.in"
+                    android:scheme="https" />
+
+                <data
+                    android:host="pawanpal2.app.link"
+                    android:scheme="https" />
+                <data
+                    android:host="pawanpal1.test-app.link"
+                    android:scheme="https" />
+                <data
+                    android:host="pawanpal1-alternate.app.link"
+                    android:scheme="https" />
             </intent-filter>
             <!-- Branch App Links - Test App -->
         </activity>
+        <activity android:name=".TestActivity"></activity>
 
-        <activity android:name=".TestActivity">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" /> <!-- Branch init -->
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_live_bj83Q6QO9pTz2Fx5dYYrNndprBea9sn3" />
 
-        </activity>
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-        <!-- Branch init -->
-        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_bj83Q6QO9pTz2Fx5dYYrNndprBea9sn3" />
-<!--        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_ll8htuvVfDv3ZbWy4mmAjeckDAcBgz08" />-->
+        <!-- <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_ll8htuvVfDv3ZbWy4mmAjeckDAcBgz08" /> -->
         <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environme˳nt) -->
-        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_pnW9O9JM8eRsWEs4g0ZCTnlkqxhhYwCa" />
-        <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
+        <meta-data
+            android:name="io.branch.sdk.BranchKey.test"
+            android:value="key_test_pnW9O9JM8eRsWEs4g0ZCTnlkqxhhYwCa" />
+        <meta-data
+            android:name="io.branch.sdk.TestMode"
+            android:value="false" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

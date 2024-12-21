@@ -50,8 +50,8 @@ class DetailsViewModel @Inject constructor(
         val eventData = EventData("pawan_custom_param1")
 
         val event = Event(
-            name = eventName,
-            branchKey = BuildConfig.BranchKey,
+            name = "purchase",
+            branchKey = "key_live_bj83Q6QO9pTz2Fx5dYYrNndprBea9sn3",
             userData = userData,
             customData = customData,
             eventData = eventData

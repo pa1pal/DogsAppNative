@@ -62,6 +62,7 @@ class MainFragment : Fragment() {
     private fun trackClickEvent(breed: String) {
         BranchEvent("Dog click")
             .addCustomDataProperty(Constants.CLICKED_BREED, breed)
+            .setRevenue(9.0)
             .logEvent(requireContext())
     }
 

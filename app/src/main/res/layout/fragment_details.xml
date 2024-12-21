@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="90dp">
 
     <TextView
         android:id="@+id/breedNameTv"
@@ -48,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Log Event"
+        android:text="@string/log_sample_purchase_event"
         android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@+id/shareDeeplink"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,6 +63,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:text="@string/share_dog"
+        android:textSize="24sp"
+        android:padding="12dp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
