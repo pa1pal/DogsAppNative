@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -43,6 +45,26 @@ class MainFragment : Fragment() {
         viewInitialization()
         viewModel.fetchBreedList()
         setObservers()
+
+        ViewCompat.setOnApplyWindowInsetsListener(
+            binding.breedsRv
+        ) { v, insets ->
+            val innerPadding = insets.getInsets(
+                // Notice we're using systemBars, not statusBar
+                WindowInsetsCompat.Type.systemBars()
+                        // Notice we're also accounting for the display cutouts
+                        or WindowInsetsCompat.Type.displayCutout()
+                // If using EditText, also add
+                // "or WindowInsetsCompat.Type.ime()"
+                // to maintain focus when opening the IME
+            )
+            v.setPadding(
+                innerPadding.left,
+                innerPadding.top,
+                innerPadding.right,
+                innerPadding.bottom)
+            insets
+        }
     }
 
     private fun viewInitialization() {

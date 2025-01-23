@@ -69,11 +69,7 @@ class NetworkModule {
     @Singleton
     fun provideBranchUniversalObject(): BranchUniversalObject {
         return  BranchUniversalObject()
-            .setCanonicalIdentifier("content/12345")
             .setTitle("My Dogs app")
             .setContentDescription("My Content Description")
-            .setContentImageUrl("https://lorempixel.com/400/400")
-            .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
-            .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
     }
 }

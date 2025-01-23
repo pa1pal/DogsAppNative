@@ -59,35 +59,6 @@
 
                 <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website. -->
             </intent-filter>
-
-            <!-- Branch App Links - Live App -->
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:host="trk.branchster.in" />
-                <data android:host="pawan.branchster.in" />
-                <data
-                    android:host="pawanpal1.app.link"
-                    android:scheme="https" />
-                <data
-                    android:host="www.pawan.devishetty.in"
-                    android:scheme="https" />
-
-                <data
-                    android:host="pawanpal2.app.link"
-                    android:scheme="https" />
-                <data
-                    android:host="pawanpal1.test-app.link"
-                    android:scheme="https" />
-                <data
-                    android:host="pawanpal1-alternate.app.link"
-                    android:scheme="https" />
-            </intent-filter>
             <!-- Branch App Links - Test App -->
         </activity>
         <activity android:name=".TestActivity"></activity>
