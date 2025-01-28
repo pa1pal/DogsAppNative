@@ -9,9 +9,6 @@ import io.branch.referral.BranchLogger
 class DogApplication: Application() {
     override fun onCreate() {
         super.onCreate()
-
         Branch.enableLogging(BranchLogger.BranchLogLevel.VERBOSE)
-        Branch.getAutoInstance(this)
-
     }
 }

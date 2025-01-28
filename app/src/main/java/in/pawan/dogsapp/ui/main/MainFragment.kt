@@ -15,10 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import `in`.pawan.dogsapp.data.ApiResponse
 import `in`.pawan.dogsapp.databinding.FragmentMainBinding
 import `in`.pawan.dogsapp.ui.main.list.BreedAdapter
-import `in`.pawan.dogsapp.utils.Constants
 import `in`.pawan.dogsapp.utils.hide
 import `in`.pawan.dogsapp.utils.show
-import io.branch.referral.util.BranchEvent
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -82,10 +80,6 @@ class MainFragment : Fragment() {
     }
 
     private fun trackClickEvent(breed: String) {
-        BranchEvent("Dog click")
-            .addCustomDataProperty(Constants.CLICKED_BREED, breed)
-            .setRevenue(9.0)
-            .logEvent(requireContext())
     }
 
     private fun setObservers() {

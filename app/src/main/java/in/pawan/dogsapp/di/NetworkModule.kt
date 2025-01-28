@@ -1,14 +1,12 @@
 package `in`.pawan.dogsapp.di
 
-import `in`.pawan.dogsapp.data.network.ApiService
 import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.branch.indexing.BranchUniversalObject
-import io.branch.referral.util.ContentMetadata
+import `in`.pawan.dogsapp.data.network.ApiService
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -65,11 +63,11 @@ class NetworkModule {
         return Dispatchers.IO
     }
 
-    @Provides
-    @Singleton
-    fun provideBranchUniversalObject(): BranchUniversalObject {
-        return  BranchUniversalObject()
-            .setTitle("My Dogs app")
-            .setContentDescription("My Content Description")
-    }
+//    @Provides
+//    @Singleton
+//    fun provideBranchUniversalObject(): BranchUniversalObject {
+//        return  BranchUniversalObject()
+//            .setTitle("My Dogs app")
+//            .setContentDescription("My Content Description")
+//    }
 }
