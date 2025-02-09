@@ -2,14 +2,20 @@ package `in`.pawan.dogsapp.data.network
 
 import `in`.pawan.dogsapp.data.dto.Breed
 import `in`.pawan.dogsapp.data.dto.BreedImages
+import `in`.pawan.dogsapp.data.dto.CreateLinkResponse
 import `in`.pawan.dogsapp.data.dto.Event
 import `in`.pawan.dogsapp.data.dto.EventResponse
+import `in`.pawan.dogsapp.data.dto.Link
+import `in`.pawan.dogsapp.data.dto.LinkData
+import `in`.pawan.dogsapp.data.dto.LinkResponse
 import `in`.pawan.dogsapp.utils.Constants
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface ApiService {
     @GET("breeds/list")
@@ -23,4 +29,10 @@ interface ApiService {
      */
     @POST(Constants.CUSTOM_EVENT)
     suspend fun trackEvent(@Body event: Event): Response<EventResponse>
+
+    @GET(Constants.DEEP_LINK)
+    suspend fun readDeepLink(@Query("url") url: String, @Query("branch_key") apiKey: String): Response<LinkResponse>
+
+    @POST(Constants.DEEP_LINK)
+    suspend fun createDeepLink(@Body linkData: LinkData): Response<CreateLinkResponse>
 }

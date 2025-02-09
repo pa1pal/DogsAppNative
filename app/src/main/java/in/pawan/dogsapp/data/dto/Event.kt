@@ -4,12 +4,13 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import androidx.annotation.Keep
+import `in`.pawan.dogsapp.BuildConfig
 
 @Keep
 @Parcelize
 data class Event(
     @SerializedName("branch_key")
-    val branchKey: String? = null,
+    val branchKey: String? = BuildConfig.branchKey,
     @SerializedName("custom_data")
     val customData: CustomData? = null,
     @SerializedName("customer_event_alias")

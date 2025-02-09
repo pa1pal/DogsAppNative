@@ -6,6 +6,9 @@ import `in`.pawan.dogsapp.data.dto.Event
 import `in`.pawan.dogsapp.data.dto.EventResponse
 import `in`.pawan.dogsapp.data.network.DogsRemoteData
 import android.util.Log
+import `in`.pawan.dogsapp.data.dto.CreateLinkResponse
+import `in`.pawan.dogsapp.data.dto.LinkData
+import `in`.pawan.dogsapp.data.dto.LinkResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -87,6 +90,71 @@ class MainRepository @Inject constructor(
                 val response = remoteData.trackEvent(event)
                 if (response.isSuccessful) {
                     emit(ApiResponse.Success(response.body() as EventResponse))
+                } else {
+                    emit(
+                        ApiResponse.Error(
+                            "Couldn't reach server. Check your internet connection. 1"
+                        )
+                    )
+                }
+            } catch (e: HttpException) {
+                emit(
+                    ApiResponse.Error(
+                        e.localizedMessage ?: "An unexpected error occured"
+                    )
+                )
+            } catch (e: IOException) {
+                Log.e("TAG", "apiCallGetProviderLandingDetails: ${e.message}")
+                emit(ApiResponse.Error("Couldn't reach server. Check your internet connection."))
+            } catch (e: Exception) {
+                Log.e("TAG", "apiCallGetProviderLandingDetails: ${e.message}")
+                emit(ApiResponse.Error("Couldn't reach server. Check your internet connection."))
+            }
+
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun createDeepLink(linkData: LinkData): Flow<ApiResponse<CreateLinkResponse>> {
+        return flow {
+            try {
+                emit(ApiResponse.Loading())
+                val response = remoteData.createDeepLink(linkData)
+                if (response.isSuccessful) {
+                    emit(ApiResponse.Success(response.body() as CreateLinkResponse))
+                } else {
+                    emit(
+                        ApiResponse.Error(
+                            "Couldn't reach server. Check your internet connection. 1"
+                        )
+                    )
+                }
+            } catch (e: HttpException) {
+                emit(
+                    ApiResponse.Error(
+                        e.localizedMessage ?: "An unexpected error occured"
+                    )
+                )
+            } catch (e: IOException) {
+                Log.e("TAG", "apiCallGetProviderLandingDetails: ${e.message}")
+                emit(ApiResponse.Error("Couldn't reach server. Check your internet connection."))
+            } catch (e: Exception) {
+                Log.e("TAG", "apiCallGetProviderLandingDetails: ${e.message}")
+                emit(ApiResponse.Error("Couldn't reach server. Check your internet connection."))
+            }
+
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun readDeepLink(
+        url: String,
+        branchKey: String
+    ): Flow<ApiResponse<LinkResponse>> {
+        return flow {
+            try {
+                emit(ApiResponse.Loading())
+                val response = remoteData.readDeepLink(url, branchKey)
+                if (response.isSuccessful) {
+                    emit(ApiResponse.Success(response.body() as LinkResponse))
                 } else {
                     emit(
                         ApiResponse.Error(

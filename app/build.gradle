@@ -29,6 +29,7 @@ android {
         }
     }
 
+
     buildTypes {
         benchmark {
             initWith release
@@ -36,9 +37,15 @@ android {
             matchingFallbacks = ['release']
             debuggable false
         }
+
+
+        debug {
+            buildConfigField("String", "branchKey", "\"key_live_bj83Q6QO9pTz2Fx5dYYrNndprBea9sn3\"")
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "branchKey", "\"key_live_bj83Q6QO9pTz2Fx5dYYrNndprBea9sn3\"")
         }
     }
     compileOptions {

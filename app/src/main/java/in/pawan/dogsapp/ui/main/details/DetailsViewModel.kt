@@ -31,6 +31,11 @@ class DetailsViewModel @Inject constructor(
     private var mutableTrackEventLiveData: MutableLiveData<ApiResponse<EventResponse>> =
         MutableLiveData()
 
+    val createLinkLiveData: LiveData<ApiResponse<CreateLinkResponse>>
+        get() = mutableCreateLinkLiveData
+    private var mutableCreateLinkLiveData: MutableLiveData<ApiResponse<CreateLinkResponse>> =
+        MutableLiveData()
+
 
     fun fetchBreedDetails(breedName: String) {
         if (networkHelper.isConnected()) {
@@ -61,6 +66,18 @@ class DetailsViewModel @Inject constructor(
             viewModelScope.launch {
                 mainRepository.trackEvent(event).collect {
                     mutableTrackEventLiveData.value = it
+                }
+            }
+        } else {
+            networkStatusMutableLiveData.value = false
+        }
+    }
+
+    fun createDeepLink(linkData: LinkData) {
+        if (networkHelper.isConnected()) {
+            viewModelScope.launch {
+                mainRepository.createDeepLink(linkData).collect {
+                    mutableCreateLinkLiveData.value = it
                 }
             }
         } else {
