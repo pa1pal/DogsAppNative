@@ -14,6 +14,7 @@ import com.squareup.picasso.BuildConfig
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import `in`.pawan.dogsapp.data.ApiResponse
+import `in`.pawan.dogsapp.data.dto.CustomData
 import `in`.pawan.dogsapp.data.dto.LinkData
 import `in`.pawan.dogsapp.databinding.FragmentDetailsBinding
 import `in`.pawan.dogsapp.utils.Constants
@@ -67,12 +68,13 @@ class DogsDetailsFragment : Fragment() {
 
     private fun setListeners() {
         binding.sampleEvent.setOnClickListener {
-
+            detailsViewModel.trackEventFromApi(breedName, Constants.CUSTOM_TRACK_SAMPLE_EVENT)
         }
 
         binding.shareDeeplink.setOnClickListener {
             detailsViewModel.trackEventFromApi(breedName, Constants.CUSTOM_TRACK_SHARE_EVENT)
-            val linkData = breedName?.let { string -> LinkData(breed = string) }
+            val customData = CustomData(breed = breedName)
+            val linkData = LinkData(customData = customData)
 
             if (linkData != null) {
                 detailsViewModel.createDeepLink(linkData)

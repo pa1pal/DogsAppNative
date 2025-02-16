@@ -18,6 +18,6 @@ interface RepoSource {
 
     suspend fun createDeepLink(linkData: LinkData): Flow<ApiResponse<CreateLinkResponse>>
 
-    suspend fun readDeepLink(url: String, branchKey: String): Flow<ApiResponse<LinkResponse>>
+    suspend fun readDeepLink(url: String): Flow<ApiResponse<LinkResponse>>
 
 }

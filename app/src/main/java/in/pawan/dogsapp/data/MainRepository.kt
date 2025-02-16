@@ -6,6 +6,7 @@ import `in`.pawan.dogsapp.data.dto.Event
 import `in`.pawan.dogsapp.data.dto.EventResponse
 import `in`.pawan.dogsapp.data.network.DogsRemoteData
 import android.util.Log
+import `in`.pawan.dogsapp.BuildConfig
 import `in`.pawan.dogsapp.data.dto.CreateLinkResponse
 import `in`.pawan.dogsapp.data.dto.LinkData
 import `in`.pawan.dogsapp.data.dto.LinkResponse
@@ -147,12 +148,11 @@ class MainRepository @Inject constructor(
 
     override suspend fun readDeepLink(
         url: String,
-        branchKey: String
     ): Flow<ApiResponse<LinkResponse>> {
         return flow {
             try {
                 emit(ApiResponse.Loading())
-                val response = remoteData.readDeepLink(url, branchKey)
+                val response = remoteData.readDeepLink(url, BuildConfig.branchKey)
                 if (response.isSuccessful) {
                     emit(ApiResponse.Success(response.body() as LinkResponse))
                 } else {

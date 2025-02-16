@@ -73,6 +73,30 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
+    fun trackCommerceEvent(eventName: String) {
+        val userData = UserData(androidId = "a123", ip = "168.1.1.1", os = "Android")
+        val customData = CustomData(breed = breedName)
+        val eventData = EventData("pawan_custom_param1")
+
+        val event = Event(
+            name = "purchase",
+            branchKey = "key_live_bj83Q6QO9pTz2Fx5dYYrNndprBea9sn3",
+            userData = userData,
+            customData = customData,
+            eventData = eventData
+        )
+
+        if (networkHelper.isConnected()) {
+            viewModelScope.launch {
+                mainRepository.trackEvent(event).collect {
+                    mutableTrackEventLiveData.value = it
+                }
+            }
+        } else {
+            networkStatusMutableLiveData.value = false
+        }
+    }
+
     fun createDeepLink(linkData: LinkData) {
         if (networkHelper.isConnected()) {
             viewModelScope.launch {

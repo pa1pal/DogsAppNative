@@ -62,12 +62,4 @@ class NetworkModule {
     fun provideCoroutineContext(): CoroutineContext {
         return Dispatchers.IO
     }
-
-//    @Provides
-//    @Singleton
-//    fun provideBranchUniversalObject(): BranchUniversalObject {
-//        return  BranchUniversalObject()
-//            .setTitle("My Dogs app")
-//            .setContentDescription("My Content Description")
-//    }
 }

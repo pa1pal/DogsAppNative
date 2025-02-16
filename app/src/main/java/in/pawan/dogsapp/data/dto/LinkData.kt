@@ -18,7 +18,8 @@ data class LinkData(
     @SerializedName("~marketing") val marketing: Boolean = false,
     @SerializedName("branch_key") val branchKey: String = BuildConfig.branchKey,
     @SerializedName("~id") val id: String = "",
-    val breed: String = "",
+    @SerializedName("breed") val breed: String = "",
+    @SerializedName("data") val customData: CustomData,
     @SerializedName("~feature") val feature: String = "",
 )
 

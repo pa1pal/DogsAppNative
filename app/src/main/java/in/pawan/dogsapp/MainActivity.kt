@@ -4,9 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
+import `in`.pawan.dogsapp.data.ApiResponse
+import `in`.pawan.dogsapp.ui.main.MainFragmentDirections
+import `in`.pawan.dogsapp.ui.main.details.DogsDetailsFragment
+import io.branch.referral.validators.DeepLinkRoutingValidator
 import java.lang.ref.WeakReference
 
 @AndroidEntryPoint
@@ -14,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var analytics: FirebaseAnalytics
     private var activityRef: WeakReference<Activity>? = null
+    private val viewmodel: MainActivityViewModel by viewModels()
 
     companion object {
         const val TAG = "MainActivity"
@@ -24,28 +31,28 @@ class MainActivity : AppCompatActivity() {
         activityRef = WeakReference<Activity>(this)
 
         setContentView(R.layout.activity_main)
+        setObservers()
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun setObservers() {
+        viewmodel.readDeepLinkLiveData.observe(this, {
+            when (it) {
+                is ApiResponse.Success -> {
+                    if (it.data?.data?.breed != null && it.data.data.breed.isNotEmpty()) {
+                        Log.d(TAG, "Deep Link Success: ${it.data.data.breed}")
+                        val navController = findNavController(R.id.nav_host_fragment)
+                        if (navController.currentDestination?.label == "DogsDetailsFragment") {
+                            navController.popBackStack()
+                        }
+                        val action = MainFragmentDirections.actionMainFragmentToDogsDetailsFragment(
+                            breed = it.data.data.breed
+                        )
 
-//        AlertDialog.Builder(this)
-//            .setTitle("Navigate to Details?")
-//            .setMessage("Accept cookies")
-//            .setPositiveButton("Yes") { dialog, _ ->
-//               Branch.getInstance().disableTracking(false)
-//            }
-//            .setNegativeButton("No") { dialog, _ ->
-//                Branch.getInstance().disableTracking(true)
-//                dialog.dismiss()
-//            }
-//            .show()
+                        DeepLinkRoutingValidator.validate(activityRef)
+                        this.findNavController(R.id.nav_host_fragment).navigate(action)
+                    }
 
-//        Branch.sessionBuilder(this).withCallback { referringParams, error ->
-//            if (error == null) {
-//
-//                Log.i("BRANCH SDK logs", referringParams.toString())
-//                if (referringParams?.has("breed") == true) {
+//                    if (it?.has("breed") == true) {
 //                    val action = MainFragmentDirections.actionMainFragmentToDogsDetailsFragment(
 //                        breed = if (referringParams?.has("breed") == true) {
 //                            referringParams?.getString("breed")
@@ -56,37 +63,31 @@ class MainActivity : AppCompatActivity() {
 //                    this.findNavController(R.id.nav_host_fragment).navigate(action)
 //
 //                }
-//            } else {
-//                Log.e("BRANCH SDK", error.message)
-//            }
-
-//        }.withData(this.intent.data).init()
-//        Log.e("branch params", Branch.getInstance().latestReferringParams.toString())
-
+                }
+                is ApiResponse.Error -> {
+                    Log.d(TAG, "Deep Link Error: ${it.message}")
+                }
+                is ApiResponse.Loading -> {
+                    Log.d(TAG, "Deep Link Loading")
+                }
+            }
+        })
     }
 
-//    private val branchReferralInitListener =
-//        BranchReferralInitListener { linkProperties, error -> // do stuff with deep link data (nav to page, display content, etc)
-//            if (error == null) {
-//                Log.i("Branch Init Config", "Deep Link Data: " + linkProperties.toString())
-//            } else {
-//                Log.e("Branch Init Config", "Error while initializing: " + error.message)
-//            }
-//        }
-
+    override fun onStart() {
+        super.onStart()
+        if (intent.data?.host == "pawanpal1.app.link") {
+            Log.d("MainActivity", intent.data.toString())
+            viewmodel.readDeepLink(intent.data.toString())
+        }
+    }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         setIntent(intent)
-        if (intent != null && intent.hasExtra("branch_force_new_session") && intent.getBooleanExtra(
-                "branch_force_new_session",
-                false
-            )
-        ) {
-            Log.i("onNewIntent", "Branch SDK reinitialized");
-//            Branch.sessionBuilder(this).withCallback(branchReferralInitListener).reInit();
-        } else {
-            Log.i("onNewIntent", "Intent is null");
+        if (intent?.data?.host == "pawanpal1.app.link") {
+            Log.d("MainActivity", intent.data.toString())
+            viewmodel.readDeepLink(intent.data.toString())
         }
     }
 }
