@@ -32,6 +32,9 @@ interface ApiService {
     @POST(Constants.CUSTOM_EVENT)
     suspend fun trackEvent(@Body event: Event): Response<EventResponse>
 
+    @POST(Constants.STANDARD_EVENT)
+    suspend fun trackStandard(@Body event: Event): Response<EventResponse>
+
     @Headers("Accept: application/json", "Content-Type: application/json")
     @GET(Constants.DEEP_LINK)
     suspend fun readDeepLink(@Query("url") url: String, @Query("branch_key") apiKey: String): Response<LinkResponse>

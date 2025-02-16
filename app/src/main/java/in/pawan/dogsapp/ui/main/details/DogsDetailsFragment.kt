@@ -20,6 +20,7 @@ import `in`.pawan.dogsapp.databinding.FragmentDetailsBinding
 import `in`.pawan.dogsapp.utils.Constants
 import `in`.pawan.dogsapp.utils.hide
 import `in`.pawan.dogsapp.utils.show
+import perfetto.protos.EventName
 
 @AndroidEntryPoint
 class DogsDetailsFragment : Fragment() {
@@ -68,7 +69,7 @@ class DogsDetailsFragment : Fragment() {
 
     private fun setListeners() {
         binding.sampleEvent.setOnClickListener {
-            detailsViewModel.trackEventFromApi(breedName, Constants.CUSTOM_TRACK_SAMPLE_EVENT)
+            detailsViewModel.trackCommerceEvent(Constants.PURCHSE_EVENT)
         }
 
         binding.shareDeeplink.setOnClickListener {

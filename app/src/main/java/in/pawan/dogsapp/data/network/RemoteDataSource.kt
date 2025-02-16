@@ -16,6 +16,8 @@ internal interface RemoteDataSource {
 
     suspend fun trackEvent(event: Event): Response<EventResponse>
 
+    suspend fun trackStandard(event: Event): Response<EventResponse>
+
     suspend fun createDeepLink(linkData: LinkData): Response<CreateLinkResponse>
 
     suspend fun readDeepLink(url: String, branchKey: String): Response<LinkResponse>

@@ -1,14 +1,10 @@
 package `in`.pawan.dogsapp.data.dto
 
-import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
-import android.os.Parcelable
 import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 import `in`.pawan.dogsapp.BuildConfig
-import kotlinx.parcelize.RawValue
 
 @Keep
-@Parcelize
 data class Event(
     @SerializedName("branch_key")
     val branchKey: String? = BuildConfig.branchKey,
@@ -24,10 +20,9 @@ data class Event(
     val userData: UserData?,
     @SerializedName("event_data")
     val eventData: EventData,
-//    @kotlinx.android.parcel.RawValue
-//    @SerializedName("content_items")
-//    val contentItems: List<ContentItems>
-) : Parcelable
+    @SerializedName("content_items")
+    val contentItems: List<ContentItems> = listOf(ContentItems())
+)
 
 @Keep
 data class ContentItems(
@@ -84,7 +79,6 @@ data class ContentItems(
 )
 
 @Keep
-@Parcelize
 data class EventData(
     @SerializedName("custom_param_1")
     val customParam1: String? = null,
@@ -105,21 +99,18 @@ data class EventData(
     @SerializedName("custom_param_3")
     val customParam3: String? = null
 
-) : Parcelable
+)
 
 @Keep
-@Parcelize
 data class CustomData(
     @SerializedName("breed")
     val breed: String? = null
-) : Parcelable
+)
 
 @Keep
-@Parcelize
-class Metadata : Parcelable
+class Metadata
 
 @Keep
-@Parcelize
 data class UserData(
     @SerializedName("aaid")
     val aaid: String? = null,
@@ -157,11 +148,10 @@ data class UserData(
     val screenHeight: Int? = null,
     @SerializedName("screen_width")
     val screenWidth: Int? = null
-) : Parcelable
+)
 
 @Keep
-@Parcelize
 data class AdvertisingIds(
     @SerializedName("oaid")
     val oaid: String? = null
-) : Parcelable
+)

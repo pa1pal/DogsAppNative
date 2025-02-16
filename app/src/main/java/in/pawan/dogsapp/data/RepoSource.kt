@@ -16,6 +16,8 @@ interface RepoSource {
 
     suspend fun trackEvent(event: Event): Flow<ApiResponse<EventResponse>>
 
+    suspend fun trackStandard(event: Event): Flow<ApiResponse<EventResponse>>
+
     suspend fun createDeepLink(linkData: LinkData): Flow<ApiResponse<CreateLinkResponse>>
 
     suspend fun readDeepLink(url: String): Flow<ApiResponse<LinkResponse>>

@@ -115,6 +115,37 @@ class MainRepository @Inject constructor(
         }.flowOn(ioDispatcher)
     }
 
+    override suspend fun trackStandard(event: Event): Flow<ApiResponse<EventResponse>> {
+        return flow {
+            try {
+                emit(ApiResponse.Loading())
+                val response = remoteData.trackStandard(event)
+                if (response.isSuccessful) {
+                    emit(ApiResponse.Success(response.body() as EventResponse))
+                } else {
+                    emit(
+                        ApiResponse.Error(
+                            "Couldn't reach server. Check your internet connection. 1"
+                        )
+                    )
+                }
+            } catch (e: HttpException) {
+                emit(
+                    ApiResponse.Error(
+                        e.localizedMessage ?: "An unexpected error occured"
+                    )
+                )
+            } catch (e: IOException) {
+                Log.e("TAG", "apiCallGetProviderLandingDetails: ${e.message}")
+                emit(ApiResponse.Error("Couldn't reach server. Check your internet connection."))
+            } catch (e: Exception) {
+                Log.e("TAG", "apiCallGetProviderLandingDetails: ${e.message}")
+                emit(ApiResponse.Error("Couldn't reach server. Check your internet connection."))
+            }
+
+        }.flowOn(ioDispatcher)
+    }
+
     override suspend fun createDeepLink(linkData: LinkData): Flow<ApiResponse<CreateLinkResponse>> {
         return flow {
             try {

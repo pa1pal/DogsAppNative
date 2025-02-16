@@ -55,8 +55,7 @@ class DetailsViewModel @Inject constructor(
         val eventData = EventData("pawan_custom_param1")
 
         val event = Event(
-            name = "purchase",
-            branchKey = "key_live_bj83Q6QO9pTz2Fx5dYYrNndprBea9sn3",
+            name = eventName,
             userData = userData,
             customData = customData,
             eventData = eventData
@@ -75,20 +74,17 @@ class DetailsViewModel @Inject constructor(
 
     fun trackCommerceEvent(eventName: String) {
         val userData = UserData(androidId = "a123", ip = "168.1.1.1", os = "Android")
-        val customData = CustomData(breed = breedName)
         val eventData = EventData("pawan_custom_param1")
 
         val event = Event(
-            name = "purchase",
-            branchKey = "key_live_bj83Q6QO9pTz2Fx5dYYrNndprBea9sn3",
+            name = eventName,
             userData = userData,
-            customData = customData,
             eventData = eventData
         )
 
         if (networkHelper.isConnected()) {
             viewModelScope.launch {
-                mainRepository.trackEvent(event).collect {
+                mainRepository.trackStandard(event).collect {
                     mutableTrackEventLiveData.value = it
                 }
             }

@@ -25,6 +25,10 @@ class DogsRemoteData @Inject constructor(
         return apiService.trackEvent(event)
     }
 
+    override suspend fun trackStandard(event: Event): Response<EventResponse> {
+        return apiService.trackStandard(event)
+    }
+
     override suspend fun createDeepLink(linkData: LinkData): Response<CreateLinkResponse> {
         return apiService.createDeepLink(linkData)
     }
