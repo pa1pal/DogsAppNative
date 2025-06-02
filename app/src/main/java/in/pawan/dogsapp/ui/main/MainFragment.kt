@@ -19,6 +19,7 @@ import `in`.pawan.dogsapp.utils.Constants
 import `in`.pawan.dogsapp.utils.hide
 import `in`.pawan.dogsapp.utils.show
 import io.branch.referral.util.BranchEvent
+import io.branch.referral.util.CurrencyType
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -85,6 +86,7 @@ class MainFragment : Fragment() {
         BranchEvent("Dog click")
             .addCustomDataProperty(Constants.CLICKED_BREED, breed)
             .setRevenue(9.0)
+            .setCurrency(CurrencyType.INR)
             .logEvent(requireContext())
     }
 

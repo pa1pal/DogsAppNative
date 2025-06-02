@@ -25,7 +25,6 @@ import java.lang.ref.WeakReference
 class MainActivity : AppCompatActivity() {
 
     private lateinit var analytics: FirebaseAnalytics
-    private var activityRef: WeakReference<Activity>? = null
 
     companion object {
         const val TAG = "MainActivity"
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityRef = WeakReference<Activity>(this)
 
         setContentView(R.layout.activity_main)
     }
@@ -53,7 +51,13 @@ class MainActivity : AppCompatActivity() {
 //            }
 //            .show()
 
-        Branch.sessionBuilder(this).withCallback { referringParams, error ->
+//        this.intent.putExtra("branch_force_new_session", "true")
+//        onNewIntent(this.intent)
+
+//        Branch.sessionBuilder(null).withCallback(branchReferralInitListener).withData(this.intent.data).init()
+
+        Branch.getInstance().latestReferringParams
+        Branch.sessionBuilder(null).withCallback { referringParams, error ->
             if (error == null) {
 
                 Log.i("BRANCH SDK logs", referringParams.toString())
@@ -64,7 +68,6 @@ class MainActivity : AppCompatActivity() {
                         } else ""
                     )
 
-                    DeepLinkRoutingValidator.validate(activityRef)
                     this.findNavController(R.id.nav_host_fragment).navigate(action)
 
                 }
@@ -78,25 +81,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val branchReferralInitListener =
-        BranchReferralInitListener { linkProperties, error -> // do stuff with deep link data (nav to page, display content, etc)
+        BranchReferralInitListener { referringParams, error -> // do stuff with deep link data (nav to page, display content, etc)
             if (error == null) {
-                Log.i("Branch Init Config", "Deep Link Data: " + linkProperties.toString())
+
+                    Log.i("BRANCH SDK logs", referringParams.toString())
+                    if (referringParams?.has("breed") == true) {
+                        val action = MainFragmentDirections.actionMainFragmentToDogsDetailsFragment(
+                            breed = if (referringParams?.has("breed") == true) {
+                                referringParams?.getString("breed")
+                            } else ""
+                        )
+
+                        this.findNavController(R.id.nav_host_fragment).navigate(action)
+
+                    }
+
             } else {
                 Log.e("Branch Init Config", "Error while initializing: " + error.message)
             }
         }
 
-
     override fun onNewIntent(intent: Intent?) {
+
         super.onNewIntent(intent)
         setIntent(intent)
-        if (intent != null && intent.hasExtra("branch_force_new_session") && intent.getBooleanExtra(
-                "branch_force_new_session",
-                false
-            )
-        ) {
+
+        if (intent != null &&
+            intent.hasExtra("branch_force_new_session") &&
+            intent.getBooleanExtra("branch_force_new_session", false)) {
             Log.i("onNewIntent", "Branch SDK reinitialized");
-            Branch.sessionBuilder(this).withCallback(branchReferralInitListener).reInit();
+            Branch.sessionBuilder(null).withCallback(branchReferralInitListener).reInit();
         } else {
             Log.i("onNewIntent", "Intent is null");
         }

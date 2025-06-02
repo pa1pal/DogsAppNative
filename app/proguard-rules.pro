@@ -29,3 +29,67 @@
 -dontwarn org.openjsse.javax.net.ssl.SSLParameters
 -dontwarn org.openjsse.javax.net.ssl.SSLSocket
 -dontwarn org.openjsse.net.ssl.OpenJSSE
+
+# Keep your data models
+-keep class in.pawan.dogsapp.data.model.** { *; }
+-keepclassmembers class in.pawan.dogsapp.data.model.** { *; }
+
+# Keep Retrofit services
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+# Keep Gson specific rules
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.google.gson.stream.** { *; }
+
+# Keep Enum values
+-keepclassmembers enum * { *; }
+
+# Retrofit does reflection on generic parameters
+-keepattributes Signature
+-keepattributes Exceptions
+
+
+# Retrofit
+-keep class retrofit2.** { *; }
+-keep interface retrofit2.** { *; }
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
+-dontwarn retrofit2.**
+
+# Generic types handling for Retrofit
+-keepattributes Signature
+-keepattributes InnerClasses
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+
+# Keep generic type information
+-keep class * extends java.lang.annotation.Annotation { *; }
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+# Keep response classes
+-keep class in.pawan.dogsapp.data.model.** { *; }
+-keepclassmembers class in.pawan.dogsapp.data.model.** {
+    <init>(...);
+    <fields>;
+}
+
+# Keep type information for generic types
+-keep,allowobfuscation,allowshrinking class retrofit2.Response
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+
+
+# Your API Interface
+-keep interface in.pawan.dogsapp.data.network.ApiService { *; }
+
+# Your Models
+-keep class com.yourcompany.model.** { *; }
+-keepnames class com.yourcompany.model.** { *; }
+#Gson
+-keep class com.google.gson.** { *; }

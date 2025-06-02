@@ -138,7 +138,7 @@ class DogsDetailsFragment : Fragment() {
 
 
 //  Do not add an empty branchUniversalObject to the BranchEvent
-            BranchEvent(BRANCH_STANDARD_EVENT.RATE)
+            BranchEvent(BRANCH_STANDARD_EVENT.PURCHASE)
                 .setAffiliation("test_affiliation")
                 .setCustomerEventAlias("my_custom_alias3")
                 .setCoupon("Coupon Code")
@@ -160,13 +160,13 @@ class DogsDetailsFragment : Fragment() {
             detailsViewModel.trackEventFromApi(breedName, Constants.CUSTOM_TRACK_SHARE_EVENT)
             val lp = LinkProperties()
                 .addControlParameter("breed", args.breed)
-            branchUniversalObject.generateShortUrl(requireContext(), lp, object : BranchLinkCreateListener{
-                override fun onLinkCreate(url: String?, error: BranchError?) {
-                    Log.d("Dogs details", "onLinkCreate: $url")
-                    Log.d("Dogs details", "onLinkCreate: $error")
-                }
-            })
-            // Create a Link Properties instance
+//            branchUniversalObject.generateShortUrl(requireContext(), lp, object : BranchLinkCreateListener{
+//                override fun onLinkCreate(url: String?, error: BranchError?) {
+//                    Log.d("Dogs details", "onLinkCreate: $url")
+//                    Log.d("Dogs details", "onLinkCreate: $error")
+//                }
+//            })
+//             Create a Link Properties instance
 
             Branch.getInstance().share(
                 requireActivity(),
