@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() {
 
 //        Branch.sessionBuilder(null).withCallback(branchReferralInitListener).withData(this.intent.data).init()
 
-        Branch.getInstance().latestReferringParams
         Branch.sessionBuilder(null).withCallback { referringParams, error ->
             if (error == null) {
 
